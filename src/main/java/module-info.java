@@ -1,5 +1,7 @@
 module org.office.dp_gp13_office {
-    requires javafx.controls;
+    requires transitive javafx.controls;
+    requires transitive javafx.graphics;
+    requires transitive javafx.media;
     requires javafx.fxml;
 
 
