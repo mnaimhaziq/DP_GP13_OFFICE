@@ -22,16 +22,17 @@ public class OfficeSpace {
         BorderPane root = new BorderPane();
         Space space = new Space(this);
         Controls controls = new Controls(space);
-        root.setTop(space);
+        root.setCenter(space);
         root.setBottom(controls);
 
         // set to full screen at start
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setFullScreen(true);
-        stage.setHeight(screenBounds.getHeight());
-        stage.setWidth(screenBounds.getWidth());
+        stage.setFullScreen(false);
+        stage.setHeight(screenBounds.getHeight() );
+        stage.setWidth(screenBounds.getWidth() );
 
         Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
+
         // set application icon
         Image image = new Image(getClass().getResourceAsStream("/org/office/dp_gp13_office/images/appIcon.png"));
         stage.getIcons().add(image);
