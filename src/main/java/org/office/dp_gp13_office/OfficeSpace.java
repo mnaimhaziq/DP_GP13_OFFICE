@@ -28,8 +28,8 @@ public class OfficeSpace {
         // set to full screen at start
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         stage.setFullScreen(false);
-        stage.setHeight(screenBounds.getHeight() );
-        stage.setWidth(screenBounds.getWidth() );
+        stage.setHeight(screenBounds.getHeight());
+        stage.setWidth(screenBounds.getWidth());
 
         Scene scene = new Scene(root, stage.getWidth(), stage.getHeight());
 
@@ -50,6 +50,7 @@ public class OfficeSpace {
         stage.heightProperty().addListener((obs, oldVal, newVal) -> {
             space.setPrefHeight((100.0 * newVal.doubleValue()) / oldVal.doubleValue());
         });
+
     }
 
     public void stopOfficeSpace() {
