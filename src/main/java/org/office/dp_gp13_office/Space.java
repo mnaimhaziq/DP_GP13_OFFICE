@@ -124,22 +124,18 @@ public class Space extends StackPane {
 
     public void playNextVideo() {
         executeCommand(new TVPlayNextCommand(this));
-        this.status = "PLAYING";
     }
 
     public void playPreviousVideo() {
         undoCommand(new TVPlayNextCommand(this));
-        this.status = "PLAYING";
     }
 
     public void pauseVideo() {
         executeCommand(new TVPauseCommand(this));
-        this.status = "PLAYING";
     }
 
     public void resumeVideo() {
         undoCommand(new TVPauseCommand(this));
-        this.status = "PLAYING";
     }
 
     public void executeCommand(Command cmd) {
