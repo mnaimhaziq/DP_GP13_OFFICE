@@ -54,10 +54,10 @@ public class Space extends StackPane {
         tvPlayer = new MediaPlayer(videoFiles.get(currentVideoIndex));
         tvView.setMediaPlayer(tvPlayer);
         tvPlayer.setAutoPlay(false);
-        tvView.setFitWidth(350);
-        tvView.setFitHeight(130);
-        tvView.setTranslateX(-373);
-        tvView.setTranslateY(-105);
+        tvView.setFitWidth(320);
+        tvView.setFitHeight(100);
+        tvView.setTranslateX(-300);
+        tvView.setTranslateY(-78);
 
         // Add the MediaView to the Space
         this.getChildren().add(tvView);
