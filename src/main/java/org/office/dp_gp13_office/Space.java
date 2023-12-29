@@ -46,10 +46,10 @@ public class Space extends StackPane {
         this.tvView = new MediaView();
         this.videoFiles = new ArrayList<>();
         videoFiles.add(new Media(getClass().getResource("tv/Command.mp4").toExternalForm()));
-        videoFiles.add(new Media(getClass().getResource("tv/Facade.mp4").toExternalForm()));
-        videoFiles.add(new Media(getClass().getResource("tv/FactoryMethod.mp4").toExternalForm()));
-        videoFiles.add(new Media(getClass().getResource("tv/Singleton.mp4").toExternalForm()));
-        videoFiles.add(new Media(getClass().getResource("tv/Strategy.mp4").toExternalForm()));
+        videoFiles.add(new Media(getClass().getResource("tv/coffee.mp4").toExternalForm()));
+        videoFiles.add(new Media(getClass().getResource("tv/cookie.mp4").toExternalForm()));
+        videoFiles.add(new Media(getClass().getResource("tv/food.mp4").toExternalForm()));
+        videoFiles.add(new Media(getClass().getResource("tv/travel.mp4").toExternalForm()));
 
         tvPlayer = new MediaPlayer(videoFiles.get(currentVideoIndex));
         tvView.setMediaPlayer(tvPlayer);
