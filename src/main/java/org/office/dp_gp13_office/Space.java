@@ -1,4 +1,5 @@
 package org.office.dp_gp13_office;
+import org.office.dp_gp13_office.BackgroundChangeStrategy;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -54,6 +55,7 @@ public class Space extends StackPane {
     private int brightness = 0;
 
 
+
     private String status = "STOPPED";
 
 
@@ -78,9 +80,7 @@ public class Space extends StackPane {
         this.lightOnCommand = new LightOnCommand();
         this.lightOffCommand = new LightOffCommand();
         this.setBrightnessCommand = new SetBrightnessCommand(0); // Set default brightness
-    
 
-    
 
         this.tvView = new MediaView();
         this.videoFiles = new ArrayList<>();
@@ -100,10 +100,10 @@ public class Space extends StackPane {
 
         // Add the MediaView to the Space
         this.getChildren().add(tvView);
-        }
+    }
 
 
-public void increaseBrightnessCommand() {
+    public void increaseBrightnessCommand() {
         updateLightingState();
         lightingManager.executeCommand(setBrightnessCommand);
     }
@@ -125,38 +125,34 @@ public void increaseBrightnessCommand() {
         lightingManager.executeCommand(lightOffCommand);
     }
 
+    private Rectangle topPortion; // Declare the Rectangle as a class-level variable
+
     public void updateLightingState() {
         if (isLightOn) {
+            // Apply a faint glow on the top side when brightness is 0
+            double glowIntensity = 0.01; // Adjust the intensity of the glow
 
-                // Apply a faint glow on the top side when brightness is 0
-                double glowIntensity = 0.01; // Adjust the intensity of the glow
+            Glow glowEffect = new Glow(glowIntensity);
 
-                Glow glowEffect = new Glow(glowIntensity);
+            // Create a Rectangle representing the top portion with a gradient fill
+            double topPortionHeight = getHeight() / 5; // Adjust the height of the top portion
+            topPortion = new Rectangle(0, 0, getWidth(), topPortionHeight);
 
-                // Create a Rectangle representing the top portion with a gradient fill
-                double topPortionHeight = getHeight() / 5; // Adjust the height of the top portion
-                Rectangle topPortion = new Rectangle(0, 0, getWidth(), topPortionHeight);
+            topPortion.setFill(new javafx.scene.paint.LinearGradient(0, 0, 0, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
+                    new javafx.scene.paint.Stop(0.01, Color.YELLOW), new javafx.scene.paint.Stop(1, Color.TRANSPARENT)));
 
-                topPortion.setFill(new javafx.scene.paint.LinearGradient(0, 0, 0, 1, true, javafx.scene.paint.CycleMethod.NO_CYCLE,
-                        new javafx.scene.paint.Stop(0.01, Color.YELLOW), new javafx.scene.paint.Stop(1, Color.TRANSPARENT)));
+            // Apply Glow effect directly to the top portion
+            topPortion.setEffect(glowEffect);
 
-                // Apply Glow effect directly to the top portion
-                topPortion.setEffect(glowEffect);
-
-                // Add the top portion to the StackPane and align it to the top
-                getChildren().add(topPortion);
-                setAlignment(topPortion, Pos.TOP_CENTER);
-
-                // Clear any effects when lights are off
-                setEffect(null);
+            // Add the top portion to the StackPane and align it to the top
+            getChildren().add(topPortion);
+            setAlignment(topPortion, Pos.TOP_CENTER);
 
         } else {
-            // Clear any effects when lights are off
-            getChildren().clear();
-            setEffect(null);
+            // Clear the top portion when lights are off
+            getChildren().removeIf(node -> node instanceof Rectangle);
         }
     }
-
 
 
     public void initializeBackground() {
@@ -293,3 +289,4 @@ public void increaseBrightnessCommand() {
         office.stopOfficeSpace();
     }
 
+}
