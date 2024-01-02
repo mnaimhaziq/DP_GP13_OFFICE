@@ -2,32 +2,32 @@ package org.office.dp_gp13_office;
 
 public class BaseEntityFactory implements EntityFactory {
     @Override
-    public Entity createPeopleEntity() {
-        return null;
+    public Entity createPeopleEntity(OfficeSpace office, Space space, int peopleRandom, int countTom, int countJohn, int countBen, int countAnne, int countSelina) {
+        return new BasePeople(office, space, peopleRandom, countTom, countJohn, countBen, countAnne, countSelina);
     }
 
     @Override
     public Entity createFileEntity() {
-        return null;
+        return new BaseFile();
     }
 
     @Override
     public Entity createVaseEntity() {
-        return null;
+        return new BaseVase();
     }
 
     @Override
     public Entity createFileCabinetEntity() {
-        return null;
+        return new BaseFileCabinet();
     }
 
     @Override
     public Entity createTableLampEntity() {
-        return null;
+        return new BaseTableLamp();
     }
 
     @Override
     public Entity createPictureEntity() {
-        return null;
+        return new BasePicture();
     }
 }
