@@ -5,6 +5,10 @@ import java.util.Stack;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -109,6 +113,43 @@ public class Controls extends GridPane {
         this.setHgap(7);
         this.setVgap(7);
         this.setPrefHeight(145);
+
+        // Add ToggleButton for turning on/off the light
+        ToggleButton toggleLightBtn = new ToggleButton("Turn On Light");
+        toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
+        toggleLightBtn.setPadding(new Insets(padding));
+
+        toggleLightBtn.setOnAction(e -> {
+            if (toggleLightBtn.isSelected()) {
+                // The button is selected, turn on the light
+                space.turnOnLight();
+                toggleLightBtn.setText("Turn Off Light");
+            } else {
+                // The button is not selected, turn off the light
+                space.turnOffLight();
+                toggleLightBtn.setText("Turn On Light");
+            }
+        });
+
+        this.addRow(0, toggleLightBtn);
+
+        Button increaseBrightnessBtn = new Button("Increase Brightness");
+        increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
+        increaseBrightnessBtn.setPadding(new Insets(padding));
+        increaseBrightnessBtn.setOnAction(e -> {
+            // Increase brightness logic
+            space.increaseBrightnessCommand(); // Use the correct method for increasing brightness
+        });
+
+        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
+        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
+        decreaseBrightnessBtn.setPadding(new Insets(padding));
+        decreaseBrightnessBtn.setOnAction(e -> {
+            // Decrease brightness logic
+            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
+        });
+
+        this.addRow(0, increaseBrightnessBtn, decreaseBrightnessBtn);
     }
 
     public void toggleMusic(Button button) {
