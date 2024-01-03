@@ -93,6 +93,7 @@ public class Space extends StackPane {
         tvView.setFitHeight(100);
         tvView.setTranslateX(-300);
         tvView.setTranslateY(-78);
+        tvView.setVisible(false);
 
         // Add the MediaView to the Space
         this.getChildren().add(tvView);
