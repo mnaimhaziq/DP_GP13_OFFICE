@@ -183,25 +183,25 @@ public class Space extends StackPane {
         EntityImageViewAdapter vase = new EntityImageViewAdapter(entityFactory.createVaseEntity()); // index 4
 
         file.setTranslateX(250);
-        file.setTranslateY(0);
-        file.setFitHeight(800);
-        file.setFitWidth(800);
-        fileCabinet.setTranslateX(230);
-        fileCabinet.setTranslateY(-50);
-        fileCabinet.setScaleY(1.3);
-        fileCabinet.setFitHeight(700);
-        fileCabinet.setFitWidth(1200);
-        picture.setTranslateX(400);
-        picture.setTranslateY(0);
-        picture.setFitHeight(800);
-        picture.setFitWidth(900);
-        tableLamp.setTranslateX(300);
-        tableLamp.setTranslateY(15);
-        tableLamp.setFitHeight(700);
-        tableLamp.setFitWidth(900);
+        file.setTranslateY(-37);
+        file.setFitHeight(80);
+        file.setFitWidth(80);
+        fileCabinet.setTranslateX(620);
+        fileCabinet.setTranslateY(150);
+        fileCabinet.setFitHeight(200);
+        fileCabinet.setFitWidth(250);
+        picture.setTranslateX(550);
+        picture.setTranslateY(-40);
+        picture.setFitHeight(80);
+        picture.setFitWidth(80);
+        tableLamp.setTranslateX(380);
+        tableLamp.setTranslateY(-20);
+        tableLamp.setFitHeight(150);
+        tableLamp.setFitWidth(150);
         vase.setTranslateX(-100);
-        vase.setFitHeight(800);
-        vase.setFitWidth(800);
+        vase.setTranslateY(10);
+        vase.setFitHeight(90);
+        vase.setFitWidth(90);
 
         this.entities.add(file);
         this.entities.add(fileCabinet);
@@ -218,28 +218,28 @@ public class Space extends StackPane {
     public void initializeBadges() {
         Image tom = new Image(App.class.getResourceAsStream("images/tom-badge.png"));
         ImageView tomView = new ImageView(tom);
-        tomView.setFitHeight(400);
-        tomView.setFitWidth(400);
+        tomView.setFitHeight(150);
+        tomView.setFitWidth(150);
 
         Image john = new Image(App.class.getResourceAsStream("images/john-badge.png"));
         ImageView johnView = new ImageView(john);
-        johnView.setFitHeight(400);
-        johnView.setFitWidth(400);
+        johnView.setFitHeight(150);
+        johnView.setFitWidth(150);
 
         Image ben = new Image(App.class.getResourceAsStream("images/ben-badge.png"));
         ImageView benView = new ImageView(ben);
-        benView.setFitHeight(400);
-        benView.setFitWidth(400);
+        benView.setFitHeight(150);
+        benView.setFitWidth(150);
 
         Image anne = new Image(App.class.getResourceAsStream("images/anne-badge.png"));
         ImageView anneView = new ImageView(anne);
-        anneView.setFitHeight(400);
-        anneView.setFitWidth(400);
+        anneView.setFitHeight(150);
+        anneView.setFitWidth(150);
 
         Image selina = new Image(App.class.getResourceAsStream("images/selina-badge.png"));
         ImageView selinaView = new ImageView(selina);
-        selinaView.setFitHeight(400);
-        selinaView.setFitWidth(400);
+        selinaView.setFitHeight(150);
+        selinaView.setFitWidth(150);
 
         this.badges.add(tomView);
         this.badges.add(johnView);
@@ -316,9 +316,10 @@ public class Space extends StackPane {
                 break;
         }
         person = new EntityImageViewAdapter(entityFactory.createPeopleEntity(office, this, peopleRandom, this.countTom, this.countJohn, this.countBen, this.countAnne, this.countSelina));
-        person.setTranslateX(-300);
-        person.setFitHeight(700);
-        person.setFitWidth(900);
+        person.setTranslateX(-430);
+        person.setTranslateY(120);
+        person.setFitHeight(350);
+        person.setFitWidth(150);
         this.getChildren().add(person);
     }
 
