@@ -35,14 +35,13 @@ import javafx.scene.media.MediaView;
 
 public class Space extends StackPane {
     OfficeSpace office;
-    // Media bgmusic;
-    List<Media> bgMusicList;
-    MediaPlayer player;
+    private List<Media> bgMusicList;
+    private MediaPlayer player;
     private MediaView tvView;
     private MediaPlayer tvPlayer;
     private List<Media> videoFiles;
     private int currentVideoIndex = 0;
-    int currentMusicIndex = 0;
+    private int currentMusicIndex = 0;
 
 
     // Lighting
@@ -181,9 +180,9 @@ public class Space extends StackPane {
  
     public boolean toggleMusic() {
         if (!this.player.getStatus().equals(Status.PLAYING)) {
-            executeCommand(new BGMusicToggle(player));
+            executeCommand(new BGMusicToggle(this));
         } else {
-            undoCommand(new BGMusicToggle(player));
+            undoCommand(new BGMusicToggle(this));
         }
         return this.player.getStatus().equals(Status.PLAYING);
     }
