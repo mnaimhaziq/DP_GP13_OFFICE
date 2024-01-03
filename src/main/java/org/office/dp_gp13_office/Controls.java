@@ -30,7 +30,12 @@ public class Controls extends GridPane {
     Button prevTvBtn;
     Button pauseTvBtn;
     Button resumeTvBtn;
+
     Button changeBackgroundBtn;
+
+    ToggleButton toggleLightBtn;
+    Button increaseBrightnessBtn;
+
 
     public Controls(Space space) {
         this.space = space;
@@ -116,7 +121,7 @@ public class Controls extends GridPane {
         this.setPrefHeight(145);
 
         // Add ToggleButton for turning on/off the light
-        ToggleButton toggleLightBtn = new ToggleButton("Turn On Light");
+        toggleLightBtn = new ToggleButton("Turn On Light");
         toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
         toggleLightBtn.setPadding(new Insets(padding));
 
@@ -134,7 +139,7 @@ public class Controls extends GridPane {
 
         this.addRow(0, toggleLightBtn);
 
-        Button increaseBrightnessBtn = new Button("Increase Brightness");
+        increaseBrightnessBtn = new Button("Adjust Brightness");
         increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
         increaseBrightnessBtn.setPadding(new Insets(padding));
         increaseBrightnessBtn.setOnAction(e -> {
@@ -142,15 +147,15 @@ public class Controls extends GridPane {
             space.increaseBrightnessCommand(); // Use the correct method for increasing brightness
         });
 
-        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
-        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
-        decreaseBrightnessBtn.setPadding(new Insets(padding));
-        decreaseBrightnessBtn.setOnAction(e -> {
-            // Decrease brightness logic
-            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
-        });
+//        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
+//        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
+//        decreaseBrightnessBtn.setPadding(new Insets(padding));
+//        decreaseBrightnessBtn.setOnAction(e -> {
+//            // Decrease brightness logic
+//            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
+//        });
 
-        this.addRow(0, increaseBrightnessBtn, decreaseBrightnessBtn);
+        this.addRow(0, increaseBrightnessBtn);
     }
 
     public void toggleMusic(Button button) {
