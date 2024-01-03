@@ -169,7 +169,6 @@ public class Space extends StackPane {
     private BackgroundChangeStrategy[] backgroundStrategies = {
             new DefaultOfficeBackgroundStrategy(),
             new ModernOfficeBackgroundStrategy(),
-            new TraditionalOfficeBackgroundStrategy()
     };
 
     public void initializeEntities() {
@@ -183,6 +182,27 @@ public class Space extends StackPane {
         EntityImageViewAdapter tableLamp = new EntityImageViewAdapter(entityFactory.createTableLampEntity()); // index 3
         EntityImageViewAdapter vase = new EntityImageViewAdapter(entityFactory.createVaseEntity()); // index 4
 
+        file.setTranslateX(250);
+        file.setTranslateY(0);
+        file.setFitHeight(800);
+        file.setFitWidth(800);
+        fileCabinet.setTranslateX(230);
+        fileCabinet.setTranslateY(-50);
+        fileCabinet.setScaleY(1.3);
+        fileCabinet.setFitHeight(700);
+        fileCabinet.setFitWidth(1200);
+        picture.setTranslateX(400);
+        picture.setTranslateY(0);
+        picture.setFitHeight(800);
+        picture.setFitWidth(900);
+        tableLamp.setTranslateX(300);
+        tableLamp.setTranslateY(15);
+        tableLamp.setFitHeight(700);
+        tableLamp.setFitWidth(900);
+        vase.setTranslateX(-100);
+        vase.setFitHeight(800);
+        vase.setFitWidth(800);
+
         this.entities.add(file);
         this.entities.add(fileCabinet);
         this.entities.add(picture);
@@ -191,33 +211,34 @@ public class Space extends StackPane {
 
         entities.forEach((entity) -> entity.setVisible(false));
 
+        // Here got error resulting the control bar disappear
         this.getChildren().addAll(entities);
     }
 
     public void initializeBadges() {
         Image tom = new Image(App.class.getResourceAsStream("images/tom-badge.png"));
         ImageView tomView = new ImageView(tom);
-        tomView.setFitHeight(200);
+        tomView.setFitHeight(400);
         tomView.setFitWidth(400);
 
         Image john = new Image(App.class.getResourceAsStream("images/john-badge.png"));
         ImageView johnView = new ImageView(john);
-        johnView.setFitHeight(200);
+        johnView.setFitHeight(400);
         johnView.setFitWidth(400);
 
         Image ben = new Image(App.class.getResourceAsStream("images/ben-badge.png"));
         ImageView benView = new ImageView(ben);
-        benView.setFitHeight(200);
+        benView.setFitHeight(400);
         benView.setFitWidth(400);
 
         Image anne = new Image(App.class.getResourceAsStream("images/anne-badge.png"));
         ImageView anneView = new ImageView(anne);
-        anneView.setFitHeight(200);
+        anneView.setFitHeight(400);
         anneView.setFitWidth(400);
 
         Image selina = new Image(App.class.getResourceAsStream("images/selina-badge.png"));
         ImageView selinaView = new ImageView(selina);
-        selinaView.setFitHeight(200);
+        selinaView.setFitHeight(400);
         selinaView.setFitWidth(400);
 
         this.badges.add(tomView);
@@ -241,9 +262,9 @@ public class Space extends StackPane {
         badgeList.addRow(2, badges.get(3), badges.get(4));
         badgeList.setBackground(
                 new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
-        badgeList.setPadding(new Insets(10));
+        badgeList.setPadding(new Insets(5));
         badgeList.setHgap(10);
-        badgeList.setVgap(20);
+        badgeList.setVgap(5);
         badgeList.setAlignment(Pos.CENTER);
 
         badgeListPopup.getContent().add(badgeList);
@@ -295,6 +316,9 @@ public class Space extends StackPane {
                 break;
         }
         person = new EntityImageViewAdapter(entityFactory.createPeopleEntity(office, this, peopleRandom, this.countTom, this.countJohn, this.countBen, this.countAnne, this.countSelina));
+        person.setTranslateX(-300);
+        person.setFitHeight(700);
+        person.setFitWidth(900);
         this.getChildren().add(person);
     }
 

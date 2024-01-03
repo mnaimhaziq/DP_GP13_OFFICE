@@ -50,6 +50,35 @@ public class Controls extends GridPane {
         });
         this.addRow(0, changeBackgroundBtn);
 
+        Button peopleBtn = new Button("Generate People");
+        peopleBtn.setMinSize(btn_minWidth, btn_minHeight);
+        peopleBtn.setPadding(new Insets(padding));
+        peopleBtn.setOnAction(e -> space.togglePeople(peopleBtn));
+        this.addRow(0, peopleBtn);
+
+        for (int i = 0; i < entityButtonNames.length; i++) {
+            final Integer innerIndex = i;
+            entityButtons[innerIndex] = new Button("Add " + entityButtonNames[innerIndex]);
+            entityButtons[innerIndex].setMinSize(btn_minWidth, btn_minHeight);
+            entityButtons[innerIndex].setPadding(new Insets(padding));
+            entityButtons[innerIndex].setOnAction(e -> {
+                toggleEntityVisibility(entityButtons[innerIndex], innerIndex, entityButtonNames[innerIndex]);
+                space.executeCommand(toggleV);
+            });
+            if (innerIndex == 3 || innerIndex == 4) {
+                this.addRow(0, entityButtons[innerIndex]);
+            } else {
+                this.addRow(0, entityButtons[innerIndex]);
+            }
+        }
+
+        Button badgeBtn = new Button("See Badges");
+        badgeBtn.setMinSize(btn_minWidth, btn_minHeight);
+        badgeBtn.setPadding(new Insets(padding));
+        badgeBtn.setOnAction(e ->
+                toggleBadgeListVisibility(badgeBtn));
+        this.addRow(0, badgeBtn);
+
         tvBtn = new Button("TV: Play");
         tvBtn.setMinSize(btn_minWidth, btn_minHeight);
         tvBtn.setPadding(new Insets(padding));
@@ -79,7 +108,9 @@ public class Controls extends GridPane {
         resumeTvBtn.setVisible(false);
         resumeTvBtn.setOnAction(e -> space.resumeVideo());
 
-        this.addRow(0, tvBtn, nextTvBtn, prevTvBtn, pauseTvBtn, resumeTvBtn);
+
+        this.addRow(0, tvBtn, nextTvBtn);
+        this.addRow(1, prevTvBtn, pauseTvBtn, resumeTvBtn);
 
         bgMusicBtn = new Button("Play BG Music");
         bgMusicBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -100,19 +131,6 @@ public class Controls extends GridPane {
 
         this.addRow(1, bgMusicBtn, nextMusicBtn, prevMusicBtn);
 
-        Button exitBtn = new Button("Exit");
-        exitBtn.setMinSize(btn_minWidth, btn_minHeight);
-        exitBtn.setPadding(new Insets(padding));
-        exitBtn.setOnAction(e -> space.stop());
-        this.addRow(1, exitBtn);
-
-        this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setPadding(new Insets(5, 5, 10, 5));
-        this.setAlignment(Pos.CENTER);
-        this.setHgap(7);
-        this.setVgap(7);
-        this.setPrefHeight(145);
-
         // Add ToggleButton for turning on/off the light
         ToggleButton toggleLightBtn = new ToggleButton("Turn On Light");
         toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -130,7 +148,7 @@ public class Controls extends GridPane {
             }
         });
 
-        this.addRow(0, toggleLightBtn);
+        this.addRow(1, toggleLightBtn);
 
         Button increaseBrightnessBtn = new Button("Increase Brightness");
         increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -148,158 +166,20 @@ public class Controls extends GridPane {
             space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
         });
 
-        this.addRow(0, increaseBrightnessBtn, decreaseBrightnessBtn);
-    }
+        Button exitBtn = new Button("Exit");
+        exitBtn.setMinSize(btn_minWidth, btn_minHeight);
+        exitBtn.setPadding(new Insets(padding));
+        exitBtn.setOnAction(e -> space.stop());
 
-//    public void initializeButtons() {
-//        int btn_minWidth = 100;
-//        int btn_minHeight = 50;
-//        int padding = 15;
-//
-//        Button changeBackgroundBtn = new Button("Change Background");
-//        changeBackgroundBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        changeBackgroundBtn.setPadding(new Insets(padding));
-//        changeBackgroundBtn.setOnAction(e -> {
-//            // Use a strategy based on your application logic
-//            // For example, switch between Default, Traditional, and Modern strategies
-//            space.changeBackground();
-//        });
-//        this.addRow(0, changeBackgroundBtn);
-//
-////        Button peopleBtn = new Button("Generate People");
-////        peopleBtn.setMinSize(btn_minWidth, btn_minHeight);
-////        peopleBtn.setPadding(new Insets(padding));
-////        peopleBtn.setOnAction(e -> space.togglePeople(peopleBtn));
-////        this.addRow(0, peopleBtn);
-//
-////        for (int i = 0; i < entityButtonNames.length; i++) {
-////            final Integer innerIndex = i;
-////            entityButtons[innerIndex] = new Button("Add " + entityButtonNames[innerIndex]);
-////            entityButtons[innerIndex].setMinSize(btn_minWidth, btn_minHeight);
-////            entityButtons[innerIndex].setPadding(new Insets(padding));
-////            entityButtons[innerIndex].setOnAction(e -> {
-////                toggleEntityVisibility(entityButtons[innerIndex], innerIndex, entityButtonNames[innerIndex]);
-////                space.executeCommand(toggleV);
-////            });
-////            if (innerIndex == 3 || innerIndex == 4) {
-////                this.addRow(1, entityButtons[innerIndex]);
-////            } else {
-////                this.addRow(0, entityButtons[innerIndex]);
-////            }
-////        }
-//
-//        Button badgeBtn = new Button("See Badges");
-//        badgeBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        badgeBtn.setPadding(new Insets(padding));
-//        badgeBtn.setOnAction(e ->
-//                toggleBadgeListVisibility(badgeBtn));
-//        this.addRow(1, badgeBtn);
-//
-//        tvBtn = new Button("TV: Play");
-//        tvBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        tvBtn.setPadding(new Insets(padding));
-//        tvBtn.setOnAction(e -> toggleTV(tvBtn));
-//
-//        nextTvBtn = new Button("TV: Next");
-//        nextTvBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        nextTvBtn.setPadding(new Insets(padding));
-//        nextTvBtn.setVisible(false);
-//        nextTvBtn.setOnAction(e -> space.playNextVideo());
-//
-//        prevTvBtn = new Button("TV: Prev");
-//        prevTvBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        prevTvBtn.setPadding(new Insets(padding));
-//        prevTvBtn.setVisible(false);
-//        prevTvBtn.setOnAction(e -> space.playPreviousVideo());
-//
-//        pauseTvBtn = new Button("TV: Pause");
-//        pauseTvBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        pauseTvBtn.setPadding(new Insets(padding));
-//        pauseTvBtn.setVisible(false);
-//        pauseTvBtn.setOnAction(e -> space.pauseVideo());
-//
-//        resumeTvBtn = new Button("TV: Resume");
-//        resumeTvBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        resumeTvBtn.setPadding(new Insets(padding));
-//        resumeTvBtn.setVisible(false);
-//        resumeTvBtn.setOnAction(e -> space.resumeVideo());
-//
-//
-//        this.addRow(1, tvBtn, nextTvBtn);
-//        this.addRow(2, prevTvBtn, pauseTvBtn, resumeTvBtn);
-//
-//        bgMusicBtn = new Button("Play BG Music");
-//        bgMusicBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        bgMusicBtn.setPadding(new Insets(padding));
-//        bgMusicBtn.setOnAction(e -> toggleMusic(bgMusicBtn));
-//
-//        nextMusicBtn = new Button("Next BG Music");
-//        nextMusicBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        nextMusicBtn.setPadding(new Insets(padding));
-//        nextMusicBtn.setVisible(false);
-//        nextMusicBtn.setOnAction(e -> space.playNextMusic());
-//
-//        prevMusicBtn = new Button("Prev BG Music");
-//        prevMusicBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        prevMusicBtn.setPadding(new Insets(padding));
-//        prevMusicBtn.setVisible(false);
-//        prevMusicBtn.setOnAction(e -> space.playPreviousMusic());
-//
-//        this.addRow(2, bgMusicBtn, nextMusicBtn);
-//        this.addRow(3, prevMusicBtn);
-//
-//        Button exitBtn = new Button("Exit");
-//        exitBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        exitBtn.setPadding(new Insets(padding));
-//        exitBtn.setOnAction(e -> space.stop());
-//        this.addRow(3, exitBtn);
-//
-//
-//
-//        // Add ToggleButton for turning on/off the light
-//        ToggleButton toggleLightBtn = new ToggleButton("Turn On Light");
-//        toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        toggleLightBtn.setPadding(new Insets(padding));
-//
-//        toggleLightBtn.setOnAction(e -> {
-//            if (toggleLightBtn.isSelected()) {
-//                // The button is selected, turn on the light
-//                space.turnOnLight();
-//                toggleLightBtn.setText("Turn Off Light");
-//            } else {
-//                // The button is not selected, turn off the light
-//                space.turnOffLight();
-//                toggleLightBtn.setText("Turn On Light");
-//            }
-//        });
-//
-//        this.addRow(3, toggleLightBtn);
-//
-//        Button increaseBrightnessBtn = new Button("Increase Brightness");
-//        increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        increaseBrightnessBtn.setPadding(new Insets(padding));
-//        increaseBrightnessBtn.setOnAction(e -> {
-//            // Increase brightness logic
-//            space.increaseBrightnessCommand(); // Use the correct method for increasing brightness
-//        });
-//
-//        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
-//        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
-//        decreaseBrightnessBtn.setPadding(new Insets(padding));
-//        decreaseBrightnessBtn.setOnAction(e -> {
-//            // Decrease brightness logic
-//            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
-//        });
-//
-//        this.addRow(3, increaseBrightnessBtn, decreaseBrightnessBtn);
-//
-//        this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
-//        this.setPadding(new Insets(5, 5, 10, 5));
-//        this.setAlignment(Pos.CENTER);
-//        this.setHgap(7);
-//        this.setVgap(7);
-//        this.setPrefHeight(145);
-//    }
+        this.addRow(1, increaseBrightnessBtn, decreaseBrightnessBtn, exitBtn);
+
+        this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setPadding(new Insets(5, 5, 10, 5));
+        this.setAlignment(Pos.CENTER);
+        this.setHgap(7);
+        this.setVgap(7);
+        this.setPrefHeight(145);
+    }
 
     public void toggleMusic(Button button) {
         boolean playing = space.toggleMusic();

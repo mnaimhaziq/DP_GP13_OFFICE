@@ -32,8 +32,8 @@ public class SelinaBadge extends Badge {
         Label label = new Label();
         Button close = new Button();
 
-        label.setMinHeight(350);
-        label.setMinWidth(650);
+        label.setMinHeight(780);
+        label.setMinWidth(590);
         label.setStyle("-fx-background-color: #808080; -fx-font-size:25");
 
         close.setText("Close");
