@@ -43,7 +43,6 @@ public class Space extends StackPane {
     private List<Media> videoFiles;
     private int currentVideoIndex = 0;
     int currentMusicIndex = 0;
-    private BackgroundChangeStrategy backgroundChangeStrategy;
 
 
     // Lighting
@@ -71,7 +70,6 @@ public class Space extends StackPane {
         player.setAutoPlay(false);
 
         this.office = office;
-        this.backgroundChangeStrategy = new DefaultOfficeBackgroundStrategy();
         this.initializeBackground();
 
 
@@ -180,11 +178,7 @@ public class Space extends StackPane {
         currentStrategyIndex = (currentStrategyIndex + 1) % backgroundStrategies.length;
     }
 
-    // Add this method to set a new strategy
-    public void setBackgroundChangeStrategy(BackgroundChangeStrategy strategy) {
-        this.backgroundChangeStrategy = strategy;
-    }
-
+ 
     public boolean toggleMusic() {
         if (!this.player.getStatus().equals(Status.PLAYING)) {
             executeCommand(new BGMusicToggle(player));
