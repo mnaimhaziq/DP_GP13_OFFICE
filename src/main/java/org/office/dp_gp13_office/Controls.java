@@ -30,6 +30,7 @@ public class Controls extends GridPane {
     Button prevTvBtn;
     Button pauseTvBtn;
     Button resumeTvBtn;
+    Button changeBackgroundBtn;
 
     public Controls(Space space) {
         this.space = space;
@@ -41,7 +42,7 @@ public class Controls extends GridPane {
         int btn_minHeight = 50;
         int padding = 15;
 
-        Button changeBackgroundBtn = new Button("Change Background");
+        changeBackgroundBtn = new Button("Change Background");
         changeBackgroundBtn.setMinSize(btn_minWidth, btn_minHeight);
         changeBackgroundBtn.setPadding(new Insets(padding));
         changeBackgroundBtn.setOnAction(e -> {
