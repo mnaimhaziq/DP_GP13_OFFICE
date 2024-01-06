@@ -165,6 +165,7 @@ public class Space extends StackPane {
     private BackgroundChangeStrategy[] backgroundStrategies = {
             new DefaultOfficeBackgroundStrategy(),
             new ModernOfficeBackgroundStrategy(),
+            new TraditionalOfficeBackgroundStrategy()
     };
 
     public void initializeEntities() {
