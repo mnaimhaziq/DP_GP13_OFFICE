@@ -1,36 +1,23 @@
 package org.office.dp_gp13_office;
-import org.office.dp_gp13_office.BackgroundChangeStrategy;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.effect.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Popup;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 
 public class Space extends StackPane {
@@ -42,6 +29,9 @@ public class Space extends StackPane {
     private List<Media> videoFiles;
     private int currentVideoIndex = 0;
     private int currentMusicIndex = 0;
+    private ArrayList<EntityImageViewAdapter> entities = new ArrayList<EntityImageViewAdapter>();
+    private ArrayList<ImageView> badges = new ArrayList<ImageView>();
+    Popup badgeListPopup = new Popup();
 
 
     // Lighting
@@ -50,7 +40,14 @@ public class Space extends StackPane {
     private LightingCommand lightOffCommand;
     private LightingCommand setBrightnessCommand;
     private boolean isLightOn = false;
-    private int brightness = 0;
+
+    // People Entities
+    private EntityImageViewAdapter person;
+    int countTom = 0;
+    int countJohn = 0;
+    int countBen = 0;
+    int countAnne = 0;
+    int countSelina = 0;
 
 
 
@@ -70,7 +67,9 @@ public class Space extends StackPane {
 
         this.office = office;
         this.initializeBackground();
-
+        this.initializeEntities();
+        this.initializeBadges();
+        this.initializeBadgeListPopup();
 
         // Initialize LightingManager and commands
         this.lightingManager = LightingManager.getInstance();
@@ -166,8 +165,174 @@ public class Space extends StackPane {
     private BackgroundChangeStrategy[] backgroundStrategies = {
             new DefaultOfficeBackgroundStrategy(),
             new ModernOfficeBackgroundStrategy(),
-            new TraditionalOfficeBackgroundStrategy()
     };
+
+    public void initializeEntities() {
+        this.initializeEntities(new BaseEntityFactory());
+    }
+
+    public void initializeEntities(EntityFactory entityFactory) {
+        EntityImageViewAdapter file = new EntityImageViewAdapter(entityFactory.createFileEntity()); // index 0
+        EntityImageViewAdapter fileCabinet = new EntityImageViewAdapter(entityFactory.createFileCabinetEntity()); // index 1
+        EntityImageViewAdapter picture = new EntityImageViewAdapter(entityFactory.createPictureEntity()); // index 2
+        EntityImageViewAdapter tableLamp = new EntityImageViewAdapter(entityFactory.createTableLampEntity()); // index 3
+        EntityImageViewAdapter vase = new EntityImageViewAdapter(entityFactory.createVaseEntity()); // index 4
+
+        file.setTranslateX(250);
+        file.setTranslateY(-37);
+        file.setFitHeight(80);
+        file.setFitWidth(80);
+        fileCabinet.setTranslateX(620);
+        fileCabinet.setTranslateY(150);
+        fileCabinet.setFitHeight(200);
+        fileCabinet.setFitWidth(250);
+        picture.setTranslateX(550);
+        picture.setTranslateY(-40);
+        picture.setFitHeight(80);
+        picture.setFitWidth(80);
+        tableLamp.setTranslateX(380);
+        tableLamp.setTranslateY(-20);
+        tableLamp.setFitHeight(150);
+        tableLamp.setFitWidth(150);
+        vase.setTranslateX(-100);
+        vase.setTranslateY(10);
+        vase.setFitHeight(90);
+        vase.setFitWidth(90);
+
+        this.entities.add(file);
+        this.entities.add(fileCabinet);
+        this.entities.add(picture);
+        this.entities.add(tableLamp);
+        this.entities.add(vase);
+
+        entities.forEach((entity) -> entity.setVisible(false));
+
+        // Here got error resulting the control bar disappear
+        this.getChildren().addAll(entities);
+    }
+
+    public void initializeBadges() {
+        Image tom = new Image(App.class.getResourceAsStream("images/tom-badge.png"));
+        ImageView tomView = new ImageView(tom);
+        tomView.setFitHeight(150);
+        tomView.setFitWidth(150);
+
+        Image john = new Image(App.class.getResourceAsStream("images/john-badge.png"));
+        ImageView johnView = new ImageView(john);
+        johnView.setFitHeight(150);
+        johnView.setFitWidth(150);
+
+        Image ben = new Image(App.class.getResourceAsStream("images/ben-badge.png"));
+        ImageView benView = new ImageView(ben);
+        benView.setFitHeight(150);
+        benView.setFitWidth(150);
+
+        Image anne = new Image(App.class.getResourceAsStream("images/anne-badge.png"));
+        ImageView anneView = new ImageView(anne);
+        anneView.setFitHeight(150);
+        anneView.setFitWidth(150);
+
+        Image selina = new Image(App.class.getResourceAsStream("images/selina-badge.png"));
+        ImageView selinaView = new ImageView(selina);
+        selinaView.setFitHeight(150);
+        selinaView.setFitWidth(150);
+
+        this.badges.add(tomView);
+        this.badges.add(johnView);
+        this.badges.add(benView);
+        this.badges.add(anneView);
+        this.badges.add(selinaView);
+
+        badges.forEach((badge) -> badge.setVisible(false));
+    }
+
+    public void initializeBadgeListPopup() {
+        Label label = new Label();
+        label.setStyle("-fx-font-size:25");
+        label.setText("Badges List");
+        label.setAlignment(Pos.CENTER);
+
+        GridPane badgeList = new GridPane();
+        badgeList.addRow(0, label);
+        badgeList.addRow(1, badges.get(0), badges.get(1), badges.get(2));
+        badgeList.addRow(2, badges.get(3), badges.get(4));
+        badgeList.setBackground(
+                new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
+        badgeList.setPadding(new Insets(5));
+        badgeList.setHgap(10);
+        badgeList.setVgap(5);
+        badgeList.setAlignment(Pos.CENTER);
+
+        badgeListPopup.getContent().add(badgeList);
+    }
+
+    public boolean toggleBadgeListPopup() {
+        if (!badgeListPopup.isShowing()) {
+            badgeListPopup.show(office.getStage());
+        } else {
+            badgeListPopup.hide();
+        }
+        return badgeListPopup.isShowing();
+    }
+
+    public boolean toggleEntity(Button button, int index, String entityName) {
+        var entity = entities.get(index);
+        if (!entity.isVisible()) {
+            entity.setVisible(true);
+            button.setText("Remove " + entityName);
+        } else {
+            entity.setVisible(false);
+            button.setText("Add " + entityName);
+        }
+        return entity.isVisible();
+    }
+
+    public void addPeople() {
+        this.addPeople(new BaseEntityFactory());
+    }
+
+    public void addPeople(EntityFactory entityFactory) {
+        Random random = new Random();
+        int peopleRandom = random.nextInt(5);
+        switch(peopleRandom) {
+            case 0:
+                this.countTom++;
+                break;
+            case 1:
+                this.countJohn++;
+                break;
+            case 2:
+                this.countBen++;
+                break;
+            case 3:
+                this.countAnne++;
+                break;
+            case 4:
+                this.countSelina++;
+                break;
+        }
+        person = new EntityImageViewAdapter(entityFactory.createPeopleEntity(office, this, peopleRandom, this.countTom, this.countJohn, this.countBen, this.countAnne, this.countSelina));
+        person.setTranslateX(-430);
+        person.setTranslateY(120);
+        person.setFitHeight(350);
+        person.setFitWidth(150);
+        this.getChildren().add(person);
+    }
+
+    public void removePeople() {
+        this.getChildren().remove(person);
+        person = null;
+    }
+
+    public void togglePeople(Button button) {
+        if (person == null) {
+            addPeople();
+            button.setText("Remove People");
+        } else {
+            removePeople();
+            button.setText("Generate People");
+        }
+    }
 
     private int currentStrategyIndex = 0;
 
@@ -175,6 +340,10 @@ public class Space extends StackPane {
         backgroundStrategies[currentStrategyIndex].changeBackground(this);
         // Move to the next strategy in a loop
         currentStrategyIndex = (currentStrategyIndex + 1) % backgroundStrategies.length;
+    }
+
+    public ArrayList<ImageView> getBadgeList() {
+        return badges;
     }
 
  

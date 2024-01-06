@@ -1,27 +1,26 @@
 package org.office.dp_gp13_office;
 
-import java.util.Stack;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
-
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
+import java.util.Stack;
+
 public class Controls extends GridPane {
     public Button[] entityButtons = new Button[5];
-    public String[] entityButtonNames = { "Bubbles", "Wrecked Ship", "Crab", "Seahorse", "Seaweed" };
+    public String[] entityButtonNames = { "File", "File Cabinet", "Picture", "Table Lamp", "Vase" };
     public Space space;
     private Stack<Button> stackBtn = new Stack<>();
     private Stack<Integer> stackInt = new Stack<>();
     private Stack<String> stackStr = new Stack<>();
+    private Toggle toggle = new Toggle();
+    private ToggleEntityVisibility toggleV = new ToggleEntityVisibility(toggle);
     Button bgMusicBtn;
     Button nextMusicBtn;
     Button prevMusicBtn;
@@ -57,6 +56,35 @@ public class Controls extends GridPane {
         });
         this.addRow(0, changeBackgroundBtn);
 
+        Button peopleBtn = new Button("Generate People");
+        peopleBtn.setMinSize(btn_minWidth, btn_minHeight);
+        peopleBtn.setPadding(new Insets(padding));
+        peopleBtn.setOnAction(e -> space.togglePeople(peopleBtn));
+        this.addRow(0, peopleBtn);
+
+        for (int i = 0; i < entityButtonNames.length; i++) {
+            final Integer innerIndex = i;
+            entityButtons[innerIndex] = new Button("Add " + entityButtonNames[innerIndex]);
+            entityButtons[innerIndex].setMinSize(btn_minWidth, btn_minHeight);
+            entityButtons[innerIndex].setPadding(new Insets(padding));
+            entityButtons[innerIndex].setOnAction(e -> {
+                toggleEntityVisibility(entityButtons[innerIndex], innerIndex, entityButtonNames[innerIndex]);
+                space.executeCommand(toggleV);
+            });
+            if (innerIndex == 3 || innerIndex == 4) {
+                this.addRow(0, entityButtons[innerIndex]);
+            } else {
+                this.addRow(0, entityButtons[innerIndex]);
+            }
+        }
+
+        Button badgeBtn = new Button("See Badges");
+        badgeBtn.setMinSize(btn_minWidth, btn_minHeight);
+        badgeBtn.setPadding(new Insets(padding));
+        badgeBtn.setOnAction(e ->
+                toggleBadgeListVisibility(badgeBtn));
+        this.addRow(0, badgeBtn);
+
         tvBtn = new Button("TV: Play");
         tvBtn.setMinSize(btn_minWidth, btn_minHeight);
         tvBtn.setPadding(new Insets(padding));
@@ -86,7 +114,9 @@ public class Controls extends GridPane {
         resumeTvBtn.setVisible(false);
         resumeTvBtn.setOnAction(e -> space.resumeVideo());
 
-        this.addRow(0, tvBtn, nextTvBtn, prevTvBtn, pauseTvBtn, resumeTvBtn);
+
+        this.addRow(0, tvBtn, nextTvBtn);
+        this.addRow(1, prevTvBtn, pauseTvBtn, resumeTvBtn);
 
         bgMusicBtn = new Button("Play BG Music");
         bgMusicBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -107,19 +137,6 @@ public class Controls extends GridPane {
 
         this.addRow(1, bgMusicBtn, nextMusicBtn, prevMusicBtn);
 
-        Button exitBtn = new Button("Exit");
-        exitBtn.setMinSize(btn_minWidth, btn_minHeight);
-        exitBtn.setPadding(new Insets(padding));
-        exitBtn.setOnAction(e -> space.stop());
-        this.addRow(1, exitBtn);
-
-        this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setPadding(new Insets(5, 5, 10, 5));
-        this.setAlignment(Pos.CENTER);
-        this.setHgap(7);
-        this.setVgap(7);
-        this.setPrefHeight(145);
-
         // Add ToggleButton for turning on/off the light
         toggleLightBtn = new ToggleButton("Turn On Light");
         toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -137,7 +154,7 @@ public class Controls extends GridPane {
             }
         });
 
-        this.addRow(0, toggleLightBtn);
+        this.addRow(1, toggleLightBtn);
 
         increaseBrightnessBtn = new Button("Adjust Brightness");
         increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
@@ -155,7 +172,19 @@ public class Controls extends GridPane {
 //            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
 //        });
 
-        this.addRow(0, increaseBrightnessBtn);
+        Button exitBtn = new Button("Exit");
+        exitBtn.setMinSize(btn_minWidth, btn_minHeight);
+        exitBtn.setPadding(new Insets(padding));
+        exitBtn.setOnAction(e -> space.stop());
+
+        this.addRow(1, increaseBrightnessBtn, exitBtn);
+
+        this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setPadding(new Insets(5, 5, 10, 5));
+        this.setAlignment(Pos.CENTER);
+        this.setHgap(7);
+        this.setVgap(7);
+        this.setPrefHeight(145);
     }
 
     public void toggleMusic(Button button) {
@@ -185,6 +214,25 @@ public class Controls extends GridPane {
             prevTvBtn.setVisible(false);
             pauseTvBtn.setVisible(false);
             resumeTvBtn.setVisible(false);
+        }
+    }
+
+    public void toggleEntityVisibility(Button button1, int index1, String entityName) {
+        toggle.setSpace(space);
+        toggle.setStackBtn(stackBtn);
+        toggle.setStackInt(stackInt);
+        toggle.setStackStr(stackStr);
+        toggle.setButton(button1);
+        toggle.setEntityName(entityName);
+        toggle.setIndex(index1);
+    }
+
+    public void toggleBadgeListVisibility(Button button) {
+        boolean visibility = space.toggleBadgeListPopup();
+        if (!visibility) {
+            button.setText("See Badges List");
+        } else {
+            button.setText("Hide Badges List");
         }
     }
 
