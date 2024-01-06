@@ -30,6 +30,12 @@ public class Controls extends GridPane {
     Button pauseTvBtn;
     Button resumeTvBtn;
 
+    Button changeBackgroundBtn;
+
+    ToggleButton toggleLightBtn;
+    Button increaseBrightnessBtn;
+
+
     public Controls(Space space) {
         this.space = space;
         initializeButtons();
@@ -40,7 +46,7 @@ public class Controls extends GridPane {
         int btn_minHeight = 50;
         int padding = 15;
 
-        Button changeBackgroundBtn = new Button("Change Background");
+        changeBackgroundBtn = new Button("Change Background");
         changeBackgroundBtn.setMinSize(btn_minWidth, btn_minHeight);
         changeBackgroundBtn.setPadding(new Insets(padding));
         changeBackgroundBtn.setOnAction(e -> {
@@ -132,7 +138,7 @@ public class Controls extends GridPane {
         this.addRow(1, bgMusicBtn, nextMusicBtn, prevMusicBtn);
 
         // Add ToggleButton for turning on/off the light
-        ToggleButton toggleLightBtn = new ToggleButton("Turn On Light");
+        toggleLightBtn = new ToggleButton("Turn On Light");
         toggleLightBtn.setMinSize(btn_minWidth, btn_minHeight);
         toggleLightBtn.setPadding(new Insets(padding));
 
@@ -150,7 +156,7 @@ public class Controls extends GridPane {
 
         this.addRow(1, toggleLightBtn);
 
-        Button increaseBrightnessBtn = new Button("Increase Brightness");
+        increaseBrightnessBtn = new Button("Adjust Brightness");
         increaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
         increaseBrightnessBtn.setPadding(new Insets(padding));
         increaseBrightnessBtn.setOnAction(e -> {
@@ -158,20 +164,20 @@ public class Controls extends GridPane {
             space.increaseBrightnessCommand(); // Use the correct method for increasing brightness
         });
 
-        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
-        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
-        decreaseBrightnessBtn.setPadding(new Insets(padding));
-        decreaseBrightnessBtn.setOnAction(e -> {
-            // Decrease brightness logic
-            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
-        });
+//        Button decreaseBrightnessBtn = new Button("Decrease Brightness");
+//        decreaseBrightnessBtn.setMinSize(btn_minWidth, btn_minHeight);
+//        decreaseBrightnessBtn.setPadding(new Insets(padding));
+//        decreaseBrightnessBtn.setOnAction(e -> {
+//            // Decrease brightness logic
+//            space.decreaseBrightnessCommand(); // Use the correct method for decreasing brightness
+//        });
 
         Button exitBtn = new Button("Exit");
         exitBtn.setMinSize(btn_minWidth, btn_minHeight);
         exitBtn.setPadding(new Insets(padding));
         exitBtn.setOnAction(e -> space.stop());
 
-        this.addRow(1, increaseBrightnessBtn, decreaseBrightnessBtn, exitBtn);
+        this.addRow(1, increaseBrightnessBtn, exitBtn);
 
         this.setBackground(new Background(new BackgroundFill(Color.web("#C2C5CC"), CornerRadii.EMPTY, Insets.EMPTY)));
         this.setPadding(new Insets(5, 5, 10, 5));

@@ -22,15 +22,13 @@ import java.util.Random;
 
 public class Space extends StackPane {
     OfficeSpace office;
-    // Media bgmusic;
-    List<Media> bgMusicList;
-    MediaPlayer player;
+    private List<Media> bgMusicList;
+    private MediaPlayer player;
     private MediaView tvView;
     private MediaPlayer tvPlayer;
     private List<Media> videoFiles;
     private int currentVideoIndex = 0;
-    int currentMusicIndex = 0;
-    private BackgroundChangeStrategy backgroundChangeStrategy;
+    private int currentMusicIndex = 0;
     private ArrayList<EntityImageViewAdapter> entities = new ArrayList<EntityImageViewAdapter>();
     private ArrayList<ImageView> badges = new ArrayList<ImageView>();
     Popup badgeListPopup = new Popup();
@@ -42,7 +40,6 @@ public class Space extends StackPane {
     private LightingCommand lightOffCommand;
     private LightingCommand setBrightnessCommand;
     private boolean isLightOn = false;
-    private int brightness = 0;
 
     // People Entities
     private EntityImageViewAdapter person;
@@ -69,7 +66,6 @@ public class Space extends StackPane {
         player.setAutoPlay(false);
 
         this.office = office;
-        this.backgroundChangeStrategy = new DefaultOfficeBackgroundStrategy();
         this.initializeBackground();
         this.initializeEntities();
         this.initializeBadges();
@@ -346,20 +342,16 @@ public class Space extends StackPane {
         currentStrategyIndex = (currentStrategyIndex + 1) % backgroundStrategies.length;
     }
 
-    // Add this method to set a new strategy
-    public void setBackgroundChangeStrategy(BackgroundChangeStrategy strategy) {
-        this.backgroundChangeStrategy = strategy;
-    }
-
     public ArrayList<ImageView> getBadgeList() {
         return badges;
     }
 
+ 
     public boolean toggleMusic() {
         if (!this.player.getStatus().equals(Status.PLAYING)) {
-            executeCommand(new BGMusicToggle(player));
+            executeCommand(new BGMusicToggle(this));
         } else {
-            undoCommand(new BGMusicToggle(player));
+            undoCommand(new BGMusicToggle(this));
         }
         return this.player.getStatus().equals(Status.PLAYING);
     }
