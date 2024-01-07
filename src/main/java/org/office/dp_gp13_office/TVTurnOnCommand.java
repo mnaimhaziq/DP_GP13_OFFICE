@@ -23,9 +23,6 @@ public class TVTurnOnCommand implements Command {
     @Override
     public void undo() {
         space.getTVView().setVisible(false);
-        // space.setVideoIndex(0);
-        // space.setTVPlayer(new MediaPlayer(space.getVideoList().get(space.getVideoIndex())));
-        // space.getTVView().setMediaPlayer(space.getTVPlayer());
         space.getTVPlayer().stop();
     }
 }
